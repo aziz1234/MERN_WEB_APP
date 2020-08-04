@@ -55,35 +55,30 @@ router.put('/appendGenre/:id',(req, res) =>{
         .catch(err => res.status(404).json({msg:'task failure'}));
 });
 
-//@route PUT api/booksDetails/appendRating/:id
-//appends a new Rating to the book by id
-router.put('/appendRating/:id',(req, res) =>{
-    bookDetails.findByIdAndUpdate(req.params.id,{$push :{bookRating: req.body.bookRating}})
-        .then(()=>res.json({msg: 'Book details updated successfully'}))
-        .catch(err => res.status(404).json({msg:'task failure'}));
-});
 
-//@route PUT api/booksDetails/appendReview/:id
-//appends a new review to the book by id
-router.put('/appendReview/:id',(req, res) =>{
-    bookDetails.findByIdAndUpdate(req.params.id,{$push :{bookReview: req.body.bookReview}})
-        .then(()=>res.json({msg: 'Book details updated successfully'}))
-        .catch(err => res.status(404).json({msg:'task failure'}));
-});
-
-//
-//
+//@route GET api/bookDetails/reviews/:bookid
+//gets all the reviews for a book
 router.get('/reviews/:bookid', (req, res) =>{
-
-   // mongoose.Types.ObjectId
-   userShelf.find({"bookShelf.bookId":mongoose.Types.ObjectId(req.params.bookid)})
-            .then(critics=>{
-                console.log(critics);
-                return res.json({critics});
+   userShelf.find()
+            .then(result=>{
+                reviews=[];
+                for(i=0;i<result.length;i++){
+                    reviews[i] = result[i].bookShelf.map((x=>{
+                        if(x.bookId.toString() === req.params.bookid){
+                            return x.review;
+                        }
+                        else
+                            {
+                                return null;
+                            }
+                        }));
+                }
+                finalreviews = reviews.flat().filter(x=>x);
+                return res.json({finalreviews});
             })
             .catch(err=>res.status(400).json({error:"server error"}));
         
 });
- //
+
 module.exports = router;
 
