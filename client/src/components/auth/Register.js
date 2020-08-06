@@ -19,7 +19,7 @@ const Register = () =>{
         else{
             console.log("success");
     }
-};
+}; 
 
     return <Fragment>
         <form style={{padding:"5% 20% "}} onSubmit={e => onSubmit(e)}>
