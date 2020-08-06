@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
 import {
     Collapse,
     Navbar,
@@ -30,17 +31,23 @@ class AppNavbar extends Component{
     return (
         <div>
           <Navbar style={{backgroundColor: "teal"}} dark expand="md">
-            <NavbarBrand href="/">reactstrap</NavbarBrand>
+            <Link to ="/">
+              <NavbarBrand >Next Book</NavbarBrand>
+            </Link>
             <NavbarToggler onClick={this.toggle} />
             <Collapse isOpen={this.state.isOpen} navbar>
-              <Nav className="mr-auto" navbar>
+              <Nav className="ml-auto" navbar>
                 <NavItem>
-                  <NavLink href="/components/">Components</NavLink>
+                  <Link to ="/login">
+                  <NavLink >Login</NavLink>
+                  </Link>
                 </NavItem>
                 <NavItem>
-                  <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
+                <Link to ="/register">
+                  <NavLink href="">Register</NavLink>
+                </Link>
                 </NavItem>
-                <UncontrolledDropdown nav inNavbar>
+                {/* <UncontrolledDropdown nav inNavbar>
                   <DropdownToggle nav caret>
                     Options
                   </DropdownToggle>
@@ -56,9 +63,8 @@ class AppNavbar extends Component{
                       Reset
                     </DropdownItem>
                   </DropdownMenu>
-                </UncontrolledDropdown>
+                </UncontrolledDropdown> */}
               </Nav>
-              <NavbarText>Simple Text</NavbarText>
             </Collapse>
           </Navbar>
         </div>
