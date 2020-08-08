@@ -1,6 +1,7 @@
 import React,{Fragment,useEffect} from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'font-awesome/css/font-awesome.min.css';
 import './App.css';
 
 import AppNavbar from './components/Navbar';
