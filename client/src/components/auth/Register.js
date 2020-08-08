@@ -1,6 +1,10 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState } from 'react';
+import {setAlert} from '../../actions/alert';
+import {register} from '../../actions/auth';
+import {connect} from 'react-redux';
+import PropTypes from 'prop-types';
 
-const Register = () =>{
+const Register = ({setAlert,register}) =>{
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -14,10 +18,10 @@ const Register = () =>{
     const onSubmit = e => {
         e.preventDefault();
         if(password !== password2){
-            console.log("passwords don't match");
+            setAlert('Passwords do not match', 'danger');
         }
         else{
-            console.log("success");
+            register({name,email,password});
     }
 }; 
 
@@ -27,22 +31,22 @@ const Register = () =>{
 
                 <div className="form-group">
                     <label>Name</label>
-                    <input type="text" className="form-control" name="name" placeholder="Enter Name" value={name} onChange={e => onChange(e)} required />
+                    <input type="text" className="form-control" name="name" placeholder="Enter Name" value={name} onChange={e => onChange(e)}  />
                 </div>
 
                 <div className="form-group">
                     <label>Email</label>
-                    <input type="email" className="form-control" name="email" placeholder="Enter email" value={email} onChange={e => onChange(e)} required />
+                    <input type="email" className="form-control" name="email" placeholder="Enter email" value={email} onChange={e => onChange(e)}  />
                 </div>
 
                 <div className="form-group">
                     <label>Password</label>
-                    <input type="password" className="form-control" name="password" placeholder="Enter Password" value={password} onChange={e => onChange(e)} required/>
+                    <input type="password" className="form-control" name="password" placeholder="Enter Password" value={password} onChange={e => onChange(e)} />
                 </div>
 
                 <div className="form-group">
                     <label>Confirm Password</label>
-                    <input type="password" className="form-control" name="password2" placeholder="Re-enter Password" value={password2} onChange={e => onChange(e)} required/>
+                    <input type="password" className="form-control" name="password2" placeholder="Re-enter Password" value={password2} onChange={e => onChange(e)} />
                 </div>
 
                 <button type="submit" className="btn btn-primary btn-block">Sign Up</button>
@@ -53,4 +57,9 @@ const Register = () =>{
     </Fragment>
 };
 
-export default Register;
+Register.propTypes = {
+    setAlert: PropTypes.func.isRequired,
+    register: PropTypes.func.isRequired
+};
+
+export default connect(null, {setAlert,register}) (Register);

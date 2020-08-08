@@ -13,7 +13,7 @@ const User = require('../../models/userModel');
 // @access   Public
 router.get('/', auth, (req, res) =>{
    User.findById(req.newUser.id).select('-password')
-        .then(user => res.json({user}))
+        .then(user => res.json(user))
         .catch(()=>res.status(500).json({msg:'server error'}))
 });
 
@@ -37,7 +37,7 @@ router.post(
     User.findOne({email})
     .then(newUser =>{
         if(!newUser){
-          return res.status(400).json({msg: "Invalid ID or password"});
+          return res.status(400).json({ errors: [{ msg: 'Invalid Id or Password' }] });
         }
         else{
             bcrypt.compare(password, newUser.password)
@@ -58,7 +58,7 @@ router.post(
                           }
                         );
                 }else{
-                    return res.status(400).json({msg:"Invalid ID or password"});
+                    return res.status(400).json({ errors: [{ msg: 'Invalid Id or Password' }] });
                 }
             })
             

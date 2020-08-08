@@ -15,7 +15,7 @@ const Login = () =>{
     };
 
     return <Fragment>
-        <form style={{padding:"5% 20% "}}>
+        <form style={{padding:"5% 20% "}} onSubmit={e => onSubmit(e)}>
                 <h3>Sign In</h3>
 
                 <div className="form-group">

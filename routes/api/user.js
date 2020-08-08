@@ -29,7 +29,7 @@ router.post('/',
     User.findOne({email})
       .then(user =>{
           if(user){
-            return res.status(400).json({email: "Email already exists"});
+            return res.status(400).json({ errors: [{ msg: 'User already exists' }] });
           }
           else{
             const newUser = new User({
