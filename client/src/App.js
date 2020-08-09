@@ -10,6 +10,7 @@ import Alert from './components/Alert';
 import Landing from './components/Landing';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
+import Explore from './components/explore/Explore';
 
 //redux
 import {Provider} from 'react-redux';
@@ -38,6 +39,7 @@ function App() {
             <Switch>
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/explore" component={Explore} />
             </Switch> 
           </section>
         </Fragment>

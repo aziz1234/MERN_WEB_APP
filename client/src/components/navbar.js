@@ -64,6 +64,11 @@ const AppNavbar = ({ auth: { isAuthenticated, loading }, logout }) =>{
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpen} navbar>
               <Nav className="ml-auto" navbar>
+                <NavItem>
+                  <Link to ="/explore">
+                    <NavLink >Explore</NavLink>
+                  </Link>
+                </NavItem>
                 {!loading && (
                   <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
                 )}

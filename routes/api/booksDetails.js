@@ -11,8 +11,11 @@ const userShelf = require('../../models/userShelfModel');
 //This will get all the books with its details
 router.get('/', (req, res) =>{
     bookDetails.find()
-        .sort({bookName:1})
-        .then(booksDetails => res.json(booksDetails))
+        .sort({date:1})
+        .then(booksDetails =>{
+            return res.json(booksDetails)
+        })
+        .catch(err=>res.status(500).json({err:"No Books Found"}));
 });
 
 
@@ -80,7 +83,7 @@ router.get('/reviews/:bookid', (req, res) =>{
         
 });
 
-//@route GET api/bookDetails/bygenre/:genres
+//@route GET api/bookDetails/bygenre/:genre
 //route to get books by a genre
 router.get('/bygenre/:genre',(req,res)=>{
     bookDetails.find({ bookGenre: { $in: [req.params.genre] } })
