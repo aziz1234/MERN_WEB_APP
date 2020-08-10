@@ -5,12 +5,13 @@ import 'font-awesome/css/font-awesome.min.css';
 import './App.css';
 
 import AppNavbar from './components/Navbar';
-import AppFooter from './components/Footer';
+//import AppFooter from './components/Footer';
 import Alert from './components/Alert';
 import Landing from './components/Landing';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import Explore from './components/explore/Explore';
+import BooksByGenre from './components/explore/BooksByGenre';
 
 //redux
 import {Provider} from 'react-redux';
@@ -33,13 +34,14 @@ function App() {
         <Fragment>
           <AppNavbar />
           <Route exact path="/" component={Landing} />
-          <AppFooter/>
+       {/*<AppFooter/>*/} 
           <section className ="container">
             <Alert/>
             <Switch>
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/explore" component={Explore} />
+            <Route exact path = "/booksin/:genre" component={BooksByGenre}/>
             </Switch> 
           </section>
         </Fragment>

@@ -22,7 +22,7 @@ export const getBookDetails = () => dispatch =>{
 }
 
 export const getBookByGenre = (genre) => dispatch => {
-    axios.get(`/api/booksDetails//bygenre/${genre}`)
+    axios.get(`/api/booksDetails/bygenre/${genre}`)
          .then(res=>{
              dispatch({
                  type: GET_BOOKBYGENRE,

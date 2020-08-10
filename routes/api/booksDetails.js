@@ -84,12 +84,12 @@ router.get('/reviews/:bookid', (req, res) =>{
 });
 
 //@route GET api/bookDetails/bygenre/:genre
-//route to get books by a genre
+//route to get books by a genre   
 router.get('/bygenre/:genre',(req,res)=>{
     bookDetails.find({ bookGenre: { $in: [req.params.genre] } })
                 .then(books=> {
-                    return res.json(books.map(x=>x.bookName))
-                })
+                    return res.json(books)
+                }) 
                 .catch(err=>res.status(400).json({err:"server error"}));
 })
 
