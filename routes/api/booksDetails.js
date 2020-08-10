@@ -18,6 +18,16 @@ router.get('/', (req, res) =>{
         .catch(err=>res.status(500).json({err:"No Books Found"}));
 });
 
+//@route GET api/booksDetails/:id
+//This will get book by id
+router.get('/:id', (req, res) =>{
+    bookDetails.findById(req.params.id)
+        .then(bookDetails =>{
+            return res.json(bookDetails)
+        })
+        .catch(err=>res.status(500).json({err:"No Book Found"}));
+});
+
 
 //@route POST api/booksDetails
 //This will add book details to the data base
@@ -63,12 +73,13 @@ router.put('/appendGenre/:id',(req, res) =>{
 //gets all the reviews for a book
 router.get('/reviews/:bookid', (req, res) =>{
    userShelf.find()
+            .populate('user',['name'])
             .then(result=>{
                 reviews=[];
                 for(i=0;i<result.length;i++){
                     reviews[i] = result[i].bookShelf.map((x=>{
                         if(x.bookId.toString() === req.params.bookid){
-                            return x.review;
+                            return ({details:x,name:result[i].user.name});
                         }
                         else
                             {

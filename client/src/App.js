@@ -12,6 +12,7 @@ import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import Explore from './components/explore/Explore';
 import BooksByGenre from './components/explore/BooksByGenre';
+import BookById from './components/explore/BookById';
 
 //redux
 import {Provider} from 'react-redux';
@@ -42,6 +43,7 @@ function App() {
             <Route exact path="/login" component={Login} />
             <Route exact path="/explore" component={Explore} />
             <Route exact path = "/booksin/:genre" component={BooksByGenre}/>
+            <Route exact path = "/book" component={BookById}/>
             </Switch> 
           </section>
         </Fragment>
