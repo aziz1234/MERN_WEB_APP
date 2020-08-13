@@ -15,7 +15,7 @@ router.get('/mybooks', auth, (req,res)=>{
     .populate('bookShelf.bookId',['bookName'])
     .then(mybooks=>{
         if(mybooks)
-            return res.json({mybooks});
+            return res.json(mybooks);
         else{
             return res.status(400).json({msg:"No books in your shelf yet"});
         }
