@@ -1,4 +1,5 @@
 import axios from 'axios';
+import {getReviews} from './usershelf'
 import {
     GET_BOOKDETAILS,
     BOOKDETAILS_FAIL,
@@ -45,6 +46,7 @@ export const getBookById = (id) => dispatch => {
                  type: GET_BOOKBYID,
                  payload: res.data
              })
+             dispatch(getReviews(id));
          })
          .catch(err=>{
             dispatch({

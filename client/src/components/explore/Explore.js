@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useEffect, useLayoutEffect } from 'react'
 import { Redirect, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -7,27 +7,30 @@ import Spinner from '../Spinner';
 import {getBookDetails, getBookByGenre} from '../../actions/bookdetails'
 import {
     Card, CardImg, CardBody,
-    CardTitle, CardFooter, Row, Col, CardLink
+    Row, Col, CardLink
   } from 'reactstrap';
 
 const Explore = ({getBookDetails,bookdetails:{bookDetails,loading}}) =>{
     useEffect(()=>{
+      console.log("action fired")
         getBookDetails() 
     },[getBookDetails])
     var a =[];
     var findByGenre = (genre)=>{
        bookDetails.filter(x=>x.bookGenre.find(y=>{
          if(y===genre)
-          a.push(x.bookName)
+          a.push(x._id)
        }))
       return(
         a.slice(0, 4).map(x=>
           <Fragment>
-            <Col >
-              <Card key={x} >
+            <Col key={x}>
+              <Card  >
                   <CardImg top width="100%" src="https://via.placeholder.com/180x270" alt="book cover" />
                   <CardBody style={{ padding:"0.5rem"}}>
-                    <CardLink style={{color:"teal"}} href="https://reactstrap.github.io/components/card/"> {x}</CardLink>
+                  <Link to = {`/book/${x}`} style={{color:"teal"}}>
+                    <CardLink style={{color:"teal"}} href="#!">more</CardLink>
+                  </Link>
                   </CardBody>    
               </Card>
           </Col> 
@@ -46,11 +49,13 @@ const Explore = ({getBookDetails,bookdetails:{bookDetails,loading}}) =>{
             <hr/>
             <Row  sm="4">
             {bookDetails.slice(0, 4).map(x=>
-                    <Col >
-                        <Card key={x._id}  >
+                    <Col key={x._id}>
+                        <Card   >
                             <CardImg top width="100%" src="https://via.placeholder.com/180x270" alt="book cover" />
                             <CardBody style={{ padding:"0.5rem"}}>
-                              <CardLink href="#!" style={{color:"teal"}}> more</CardLink>
+                              <Link to = {`/book/${x._id}`} style={{color:"teal"}}>
+                                <CardLink style={{color:"teal"}}> more</CardLink>
+                              </Link>
                             </CardBody>    
                         </Card>
                     </Col> 

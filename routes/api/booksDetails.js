@@ -71,14 +71,15 @@ router.put('/appendGenre/:id',(req, res) =>{
 
 //@route GET api/bookDetails/reviews/:bookid
 //gets all the reviews for a book
-router.get('/reviews/:bookid', (req, res) =>{
+router.get('/reviews/:id', (req, res) =>{
    userShelf.find()
             .populate('user',['name'])
             .then(result=>{
                 reviews=[];
+                console.log(req.params.id)
                 for(i=0;i<result.length;i++){
                     reviews[i] = result[i].bookShelf.map((x=>{
-                        if(x.bookId.toString() === req.params.bookid){
+                        if(x.bookId.toString() === req.params.id){
                             return ({details:x,name:result[i].user.name});
                         }
                         else

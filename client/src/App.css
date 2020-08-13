@@ -1,0 +1,13 @@
+.gallery-wrap .img-wrap img {
+    display: inline-block;
+    cursor: zoom-in;
+    margin: 30px auto 20px;
+}
+
+
+
+
+.gallery-wrap .img-small-wrap {
+    text-align: center;
+    padding-bottom: 0.5rem;
+}

@@ -21,6 +21,7 @@ export default function (state = initialState, action) {
                 loading: false,
                 bookDetails: payload
             }
+        
         case BOOKDETAILS_FAIL:
             return{
                 ...state,

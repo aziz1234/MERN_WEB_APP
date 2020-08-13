@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from 'react'
-import { Redirect } from 'react-router-dom';
+import { Redirect,Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import bookdetails from '../../reducers/bookdetails';
@@ -11,6 +11,7 @@ import {
 
 const BooksByGenre = ({bookdetails:{bookDetails,loading},getBookByGenre,match}) =>{
     useEffect(()=>{
+        console.log("action fired")
         getBookByGenre(match.params.genre)
     },[getBookByGenre,match.params.genre])
 
@@ -29,7 +30,9 @@ const BooksByGenre = ({bookdetails:{bookDetails,loading},getBookByGenre,match}) 
                 </Media>
                 <Media body style={{paddingLeft:"1rem"}}>
                     <Media heading>
+                    <Link to = {`/book/${x._id}`} style={{color:"teal"}}>
                         {x.bookName}
+                    </Link>
                     </Media>
                         Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
                 </Media>
