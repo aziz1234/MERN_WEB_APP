@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {setAlert} from './alert';
+import {getShelf} from './usershelf'
 import{
     REGISTER_SUCCESS,
     REGISTER_FAIL,
@@ -46,6 +47,7 @@ export const register =({name, email , password}) => dispatch => {
                  payload: res.data
              })
              dispatch(loadUser());
+             
         })
         .catch(err=>{
              const errors = err.response.data.errors;

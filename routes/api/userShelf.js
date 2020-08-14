@@ -64,8 +64,16 @@ router.post('/:bookid',auth,(req,res)=>{
                 })
             }
         })
-
-
 })
+
+router.delete('/:bookid',auth,(req,res)=>{
+    userShelf.findOneAndUpdate({user:req.newUser.id},{$pull:{bookShelf:{bookId:req.params.bookid}}},{new:true})
+             .then(msg=>{
+                 return res.json(msg);
+             })
+             .catch(err=>{
+                 return res.status(400).json(err);
+             });
+});
 
 module.exports = router;

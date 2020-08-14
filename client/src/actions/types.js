@@ -17,3 +17,5 @@ export const ADD_BOOK ='ADD_BOOK';
 export const BOOKADD_FAIL ='BOOKADD_FAIL';
 export const GET_SHELF ='GET_SHELF';
 export const SHELFLOAD_FAIL ='SHELFLOAD_FAIL';
+export const DELETE_BOOK ='DELETE_BOOK';
+export const BOOKDELETE_FAIL='BOOKDELETE_FAIL';

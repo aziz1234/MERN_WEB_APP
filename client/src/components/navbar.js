@@ -49,7 +49,11 @@ const AppNavbar = ({ auth: { isAuthenticated, loading }, logout }) =>{
   const authLinks = (
     <Fragment>
       <NavItem>
-        <i class="fas fa-sign-out-alt"></i>{' '}
+        <Link to ="/myshelf">
+        <NavLink >MyShelf</NavLink>
+        </Link>
+      </NavItem>
+      <NavItem>
         <NavLink onClick={logout} href='#!'>Logout</NavLink>
       </NavItem>
     </Fragment>

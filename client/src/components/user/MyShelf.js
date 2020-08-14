@@ -2,11 +2,11 @@ import React, { Fragment, useEffect, useState, setState } from 'react'
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Spinner from '../Spinner';
-import {getShelf} from '../../actions/usershelf';
-import { Nav, NavItem, NavLink, Table} from 'reactstrap';
+import {getShelf, deleteBook, addBook} from '../../actions/usershelf';
+import { Nav, NavItem, NavLink, Table,  Col,  Button, Modal, ModalHeader, ModalBody, FormGroup , Form, Label, Input} from 'reactstrap';
 import {v4 as uuidv4} from 'uuid';
 
-const MyShelf = ({usershelf,auth:{isAuthenticated}, getShelf}) =>{
+const MyShelf = ({usershelf,auth:{isAuthenticated}, getShelf,deleteBook, addBook}) =>{
 
     useEffect(()=>{
         getShelf()
@@ -15,15 +15,9 @@ const MyShelf = ({usershelf,auth:{isAuthenticated}, getShelf}) =>{
     const [mybooks, setMyBooks] = useState([]);
 
     var newmybooks = '';
-    
-    if(usershelf.hasOwnProperty(usershelf.shelf)){
-        filter();
-       // newmybooks = usershelf.shelf.bookShelf
-        //setMyBooks(newmybooks)
-    }
-   
-
+ 
     const filter =(tag) =>{
+       
         if(tag==="reading"){
             newmybooks = usershelf.shelf.bookShelf.filter(x=>x.status==="reading")
            setMyBooks(newmybooks)
@@ -45,6 +39,30 @@ const MyShelf = ({usershelf,auth:{isAuthenticated}, getShelf}) =>{
             setMyBooks(newmybooks)
         }
     }
+
+    const [modal, setModal] = useState({
+        modalstatus: 'false',
+        status: '',
+		rating: '',
+        review: '',
+        bookid:''
+    });
+
+    
+	const toggle = (status,rating,review,bookid) => {
+        
+        setModal({...modal, modalstatus:(!modal.modalstatus), status, rating, review, bookid});
+    }
+	  
+    const {status, rating, review, bookid} = modal;
+
+    const onChange = e => setModal({...modal, [e.target.name]:e.target.value})
+
+    const onSubmit = e => {
+        e.preventDefault();
+		addBook({status, rating, review, bookid});
+        window.location.reload(false);
+	};
 
     return(
         <Fragment>
@@ -82,8 +100,8 @@ const MyShelf = ({usershelf,auth:{isAuthenticated}, getShelf}) =>{
                                 <th style={{color:"teal"}}>Update</th>
                             </tr>
                         </thead>
-                        <tbody>
-                        {mybooks.map((x,i)=>
+                        <tbody> 
+                            {mybooks.map((x,i)=>
                             <Fragment key = {uuidv4()}>
                                 <tr>
                                     <th scope="row">{i+1}</th>
@@ -91,13 +109,55 @@ const MyShelf = ({usershelf,auth:{isAuthenticated}, getShelf}) =>{
                                     <td>{x.status}</td>
                                     <td>{x.rating?x.rating:"not rated"}</td>
                                     <td>
-                                        <button type="button" color="primary"><i class="fa fa-pencil" aria-hidden></i></button> {' '}
-                                        <button type="button" color="danger"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                                        <Button color="primary"  onClick={()=>toggle(x.status, x.rating, x.review, x.bookId._id)}><i class="fa fa-pencil" aria-hidden></i></Button> {' '}
+                                        <Button color="danger" onClick={()=>deleteBook(x.bookId._id)}><i class="fa fa-trash" aria-hidden="true"></i></Button>
+                                      
                                     </td>
                                 </tr>
                             </Fragment>)}
                         </tbody>
                     </Table>
+                    <Modal isOpen={!modal.modalstatus} toggle={toggle}>
+											<ModalHeader toggle={toggle}>Add to shelf</ModalHeader>
+											<ModalBody>
+												<Form onSubmit={e => onSubmit(e)}>
+													<FormGroup row>
+													<Label for="exampleSelect" sm={2}>Status</Label>
+														<Col sm={6}>
+															<Input type="select" name="status" id="exampleSelect"  value={status} onChange={e => onChange(e)} required>
+																<option value=''>(required)</option>
+																<option value='plan to read'>plan to read</option>
+																<option value='reading'>reading</option>
+																<option value='completed'>completed</option>
+																<option value='dropped'>dropped</option>
+															</Input>
+														</Col>
+													</FormGroup>
+													<FormGroup row>
+													<Label for="exampleSelect" sm={2}>Rating</Label>
+														<Col sm={4}>
+															<Input type="select" name="rating"  id="exampleSelect"  value={rating} onChange={e => onChange(e)}>
+																<option value =''>(optional)</option>
+																<option value ='1'>1</option>
+																<option value ='2'>2</option>
+																<option value ='3'>3</option>
+																<option value ='4'>4</option>
+																<option value ='5'>5</option>
+															</Input>
+														</Col>
+													</FormGroup>
+													<FormGroup row>
+														<Label for="exampleText" sm={2}>Review</Label>
+														<Col sm={9}>
+															<Input type="textarea" name="review" placeholder="(optional)" id="exampleText" value={review} onChange={e => onChange(e)} />
+														</Col>
+													</FormGroup>
+													<Button type ="submit" color="primary" >save</Button>{' '}
+													<Button color="secondary" onClick={toggle}>Cancel</Button>
+												</Form>												
+											</ModalBody>
+											
+										</Modal>
                </Fragment>
            )}
         </Fragment>
@@ -106,6 +166,8 @@ const MyShelf = ({usershelf,auth:{isAuthenticated}, getShelf}) =>{
 
 MyShelf.propTypes ={
     getShelf: PropTypes.func.isRequired,
+    deleteBook: PropTypes.func.isRequired,
+    addBook: PropTypes.func.isRequired,
     usershelf: PropTypes.object.isRequired,
     auth: PropTypes.object.isRequired
 }
@@ -116,4 +178,4 @@ const mapStateToProps = state =>({
 })
 
 
-export default connect(mapStateToProps,{getShelf}) (MyShelf);
+export default connect(mapStateToProps,{getShelf, deleteBook, addBook}) (MyShelf);

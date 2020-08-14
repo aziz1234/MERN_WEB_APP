@@ -6,7 +6,9 @@ import {
     ADD_BOOK, 
     BOOKADD_FAIL,
     GET_SHELF,
-    SHELFLOAD_FAIL
+    SHELFLOAD_FAIL,
+    DELETE_BOOK,
+    BOOKDELETE_FAIL
 } from './types'
 
 export const getReviews = id => dispatch =>{
@@ -64,5 +66,22 @@ export const getShelf = () => dispatch =>{
                  type: SHELFLOAD_FAIL,
                  payload: { msg: err.response.statusText, status: err.response.status }
              })
+         })
+}
+
+export const deleteBook = (bookid) => dispatch =>{
+    axios.delete(`/api/userShelf/${bookid}`)
+         .then(res=>{
+             dispatch({
+                 type: DELETE_BOOK
+             });
+             dispatch(setAlert("Book Deleted successfully","success"));
+         })
+         .catch(err=>{
+             dispatch({
+                 type: BOOKDELETE_FAIL,
+                 payload: { msg: err.response.statusText, status: err.response.status }
+             })
+             dispatch(setAlert("Task Failure!!","warning"));
          })
 }
