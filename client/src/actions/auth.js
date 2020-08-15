@@ -8,7 +8,9 @@ import{
     AUTH_ERROR,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
-    LOGOUT
+    LOGOUT,
+    DELETEUSER_SUCCESS,
+    DELETEUSER_FAIL,
 } from './types';
 import setAuthToken from '../utils/setAuthToken';
 
@@ -91,4 +93,25 @@ export const login =(email , password) => dispatch => {
 //Logout user
 export const logout = () => dispatch => {
     dispatch({type:LOGOUT});
+}
+
+//Delete User Profile
+export const deleteUser =() =>dispatch => {
+    const config = {
+        headers :{
+            'Content-Type':'application/json'
+        }
+    }
+    axios.delete('/api/user',config)
+         .then(()=>{
+             dispatch({
+                 type: DELETEUSER_SUCCESS
+             })
+         })
+         .catch(()=>{
+             dispatch({
+                 type: DELETEUSER_FAIL
+             });
+             dispatch(setAlert("Task Failure","Danger"));
+         })
 }

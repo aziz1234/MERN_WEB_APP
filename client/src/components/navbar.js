@@ -54,6 +54,11 @@ const AppNavbar = ({ auth: { isAuthenticated, loading }, logout }) =>{
         </Link>
       </NavItem>
       <NavItem>
+        <Link to ="/profile">
+        <NavLink >Profile</NavLink>
+        </Link>
+      </NavItem>
+      <NavItem>
         <NavLink onClick={logout} href='#!'>Logout</NavLink>
       </NavItem>
     </Fragment>

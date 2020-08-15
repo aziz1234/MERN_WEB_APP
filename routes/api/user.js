@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const auth = require('../../middleware/auth');
 const { check, validationResult } = require('express-validator');
 const normalize = require('normalize-url');
 
@@ -66,6 +67,17 @@ router.post('/',
             });
           }
       }) 
+ });
+
+ //Delete a user completely from database
+ router.delete('/',auth, (req,res)=>{
+   User.findOneAndDelete(req.newUser.id)
+       .then(msg=>{
+         return res.json(msg); 
+       })
+       .catch(err=>{
+         res.status(400).json(err);
+       })
  });
 
  module.exports = router;

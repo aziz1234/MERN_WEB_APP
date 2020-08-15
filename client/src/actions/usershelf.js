@@ -8,7 +8,9 @@ import {
     GET_SHELF,
     SHELFLOAD_FAIL,
     DELETE_BOOK,
-    BOOKDELETE_FAIL
+    BOOKDELETE_FAIL,
+    DELETESHELF_SUCCESS,
+    DELETESHELF_FAIL
 } from './types'
 
 export const getReviews = id => dispatch =>{
@@ -84,4 +86,23 @@ export const deleteBook = (bookid) => dispatch =>{
              })
              dispatch(setAlert("Task Failure!!","warning"));
          })
+}
+
+export const deleteShelf = () => dispatch =>{
+    const config = {
+        headers :{
+            'Content-Type':'application/json'
+        }
+    }
+    axios.delete('/api/userShelf', config)
+         .then(()=>{
+             dispatch({
+                 type: DELETESHELF_SUCCESS
+             });
+         })
+         .catch(()=>{
+             dispatch({
+                 type: DELETESHELF_FAIL
+             });
+         });
 }

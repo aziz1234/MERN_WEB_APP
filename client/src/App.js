@@ -14,6 +14,7 @@ import Explore from './components/explore/Explore';
 import BooksByGenre from './components/explore/BooksByGenre';
 import BookById from './components/explore/BookById';
 import MyShelf from './components/user/MyShelf';
+import Profile from './components/user/Profile';
 import PrivateRoute from './routing/PrivateRoutes';
 
 //redux
@@ -48,6 +49,7 @@ function App() {
             <Route exact path = "/booksin/:genre" component={BooksByGenre}/>
             <Route exact path = "/book/:id" component={BookById}/>
             <PrivateRoute exact path ="/myshelf" component ={MyShelf}/>
+            <PrivateRoute exact path ="/profile" component ={Profile}/>
             </Switch> 
           </section> 
         </Fragment>

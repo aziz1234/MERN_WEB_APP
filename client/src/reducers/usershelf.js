@@ -6,7 +6,9 @@ import {
     GET_SHELF,
     SHELFLOAD_FAIL,
     DELETE_BOOK,
-    BOOKDELETE_FAIL
+    BOOKDELETE_FAIL,
+    DELETESHELF_SUCCESS,
+    DELETESHELF_FAIL
 } from '../actions/types'
 
 const initialState ={
@@ -40,6 +42,13 @@ export default function (state = initialState, action) {
                 ...state,
                 loading: false
             }
+        case DELETESHELF_SUCCESS:
+            return{
+                ...state,
+                shelf:null,
+                loading:false
+            }
+        case  DELETESHELF_FAIL:
         case BOOKDELETE_FAIL:
         case BOOKADD_FAIL:
             return{

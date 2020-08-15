@@ -40,6 +40,7 @@ const BookById = ({auth: { isAuthenticated},bookdetails:{bookDetails},usershelf:
 		let bookid = bookDetails._id;
 		addBook({status, rating, review, bookid});
 		setModal(!modal);
+		window.location.reload(false);
 	};
 	 
 	
@@ -56,7 +57,7 @@ const BookById = ({auth: { isAuthenticated},bookdetails:{bookDetails},usershelf:
 										<span class="float-right">{x.details.rating}<i class="text-warning fa fa-star"></i></span>
 									</p>
 									<div class="clearfix"></div>
-						<			p>{x.details.review}</p>
+									<p>{x.details.review}</p>
 								</Col>
 							</Fragment>
 						)

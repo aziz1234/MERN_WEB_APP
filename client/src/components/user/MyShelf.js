@@ -72,6 +72,8 @@ const MyShelf = ({usershelf,auth:{isAuthenticated}, getShelf,deleteBook, addBook
                <Fragment>
                   <center><h3 style={{color:"teal"}}>My Shelf</h3></center>
                    <hr/>
+                   {usershelf.shelf.hasOwnProperty("bookShelf")?(
+                    <Fragment>
                    <h4 style={{color:"teal"}}>Filter By:</h4>
                     <Nav>
                         <NavItem>
@@ -110,8 +112,9 @@ const MyShelf = ({usershelf,auth:{isAuthenticated}, getShelf,deleteBook, addBook
                                     <td>{x.rating?x.rating:"not rated"}</td>
                                     <td>
                                         <Button color="primary"  onClick={()=>toggle(x.status, x.rating, x.review, x.bookId._id)}><i class="fa fa-pencil" aria-hidden></i></Button> {' '}
-                                        <Button color="danger" onClick={()=>deleteBook(x.bookId._id)}><i class="fa fa-trash" aria-hidden="true"></i></Button>
-                                      
+                                        <Button color="danger" onClick={()=>{deleteBook(x.bookId._id)
+                                                                             window.location.reload(false)}}>
+                                                <i class="fa fa-trash" aria-hidden="true"></i></Button>
                                     </td>
                                 </tr>
                             </Fragment>)}
@@ -158,6 +161,11 @@ const MyShelf = ({usershelf,auth:{isAuthenticated}, getShelf,deleteBook, addBook
 											</ModalBody>
 											
 										</Modal>
+                                        </Fragment>):(
+                                            <Fragment>
+                                               <h2> No Books In Your Shelf Yet :( </h2>
+                                            </Fragment>
+                                        )}
                </Fragment>
            )}
         </Fragment>

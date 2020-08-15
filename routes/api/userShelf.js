@@ -24,7 +24,7 @@ router.get('/mybooks', auth, (req,res)=>{
 })
 
 
-//@route POST api/userShelf/mybooks.
+//@route POST api/userShelf/:bookid
 //create/update user's bookSelf.
 router.post('/:bookid',auth,(req,res)=>{
     const{
@@ -66,6 +66,7 @@ router.post('/:bookid',auth,(req,res)=>{
         })
 })
 
+//delete the book from user's shelf
 router.delete('/:bookid',auth,(req,res)=>{
     userShelf.findOneAndUpdate({user:req.newUser.id},{$pull:{bookShelf:{bookId:req.params.bookid}}},{new:true})
              .then(msg=>{
@@ -73,6 +74,17 @@ router.delete('/:bookid',auth,(req,res)=>{
              })
              .catch(err=>{
                  return res.status(400).json(err);
+             });
+});
+
+// route to delete the user  shelf once the user's profile is deleted
+router.delete('/', auth, (req,res)=>{
+    userShelf.findOneAndDelete({user:req.newUser.id})
+             .then(msg=>{
+                 return res.json(msg);
+             })
+             .catch(err=>{
+                 return res.status(400).json({err});
              });
 });
 

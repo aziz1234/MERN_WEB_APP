@@ -5,7 +5,9 @@ import {
     AUTH_ERROR,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
-    LOGOUT
+    LOGOUT,
+    DELETEUSER_SUCCESS,
+    DELETEUSER_FAIL
 } from '../actions/types'
 
 const initialState = {
@@ -35,6 +37,21 @@ const initialState = {
               isAuthenticated: true,
               loading: false
             };
+        case DELETEUSER_SUCCESS:
+            localStorage.removeItem('token');
+            return{
+                ...state,
+                token: null,
+                isAuthenticated: false,
+                loading: false
+            };
+        case DELETEUSER_FAIL:
+            return {
+                ...state,
+                ...payload,
+                isAuthenticated: true,
+                loading: false
+              };
         case LOGIN_FAIL:
         case AUTH_ERROR:
         case REGISTER_FAIL:
@@ -45,7 +62,7 @@ const initialState = {
                 token:null,
                 isAuthenticated:false,
                 loading:false
-            }
+            };
         default:
             return state;
     }

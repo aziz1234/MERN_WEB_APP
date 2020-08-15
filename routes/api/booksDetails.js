@@ -76,7 +76,6 @@ router.get('/reviews/:id', (req, res) =>{
             .populate('user',['name'])
             .then(result=>{
                 reviews=[];
-                console.log(req.params.id)
                 for(i=0;i<result.length;i++){
                     reviews[i] = result[i].bookShelf.map((x=>{
                         if(x.bookId.toString() === req.params.id){
