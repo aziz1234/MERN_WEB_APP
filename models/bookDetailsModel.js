@@ -17,11 +17,8 @@ const bookDetailsSchema = new Schema({
     publicationDate: {
         type: Date
     },
-    review: {
-        type: [String]
-    },
-    rating: {
-        type: [Number]
+    bookAuthor: {
+        type: String
     },
     date: {
         type: Date,

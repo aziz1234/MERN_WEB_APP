@@ -11,7 +11,7 @@ const userShelf = require('../../models/userShelfModel');
 //This will get all the books with its details
 router.get('/', (req, res) =>{
     bookDetails.find()
-        .sort({date:1})
+        .sort({date:-1})
         .then(booksDetails =>{
             return res.json(booksDetails)
         })
@@ -30,17 +30,19 @@ router.get('/:id', (req, res) =>{
 
 
 //@route POST api/booksDetails
-//This will add book details to the data base
+//This will add book details to the database
 router.post('/', (req, res) =>{
     const newBookDetails = new bookDetails({
         bookName: req.body.bookName,
         bookDescription: req.body.bookDescription,
         bookGenre: req.body.bookGenre,
-        review: req.body.review,
-        rating: req.body.rating
+        bookAuthor: req.body.bookAuthor,
+        publicationDate: req.body.publicationDate
     });
     
-    newBookDetails.save().then(bookDetails => res.json(bookDetails));
+    newBookDetails.save()
+                  .then(bookDetails => res.json(bookDetails))
+                  .catch(err=>res.json(err));
 });
 
 //@route PUT api/booksDetails/:id

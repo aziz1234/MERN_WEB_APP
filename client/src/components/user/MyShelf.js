@@ -107,9 +107,9 @@ const MyShelf = ({usershelf,auth:{isAuthenticated}, getShelf,deleteBook, addBook
                             <Fragment key = {uuidv4()}>
                                 <tr>
                                     <th scope="row">{i+1}</th>
-                                    <td>{x.bookId.bookName}</td>
-                                    <td>{x.status}</td>
-                                    <td>{x.rating?x.rating:"not rated"}</td>
+                                    <td>{x.bookId?(x.bookId.bookName):("Book removed from DB")}</td>
+                                    <td>{x.bookId?(x.status):""}</td>
+                                    <td>{x.bookId?(x.rating?x.rating:"--"):"--"}</td>
                                     <td>
                                         <Button color="primary"  onClick={()=>toggle(x.status, x.rating, x.review, x.bookId._id)}><i class="fa fa-pencil" aria-hidden></i></Button> {' '}
                                         <Button color="danger" onClick={()=>{deleteBook(x.bookId._id)
