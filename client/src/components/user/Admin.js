@@ -5,11 +5,11 @@ import { connect } from 'react-redux';
 import {addBookToDb, updateDatabase, deleteBookfromDatabase} from '../../actions/bookdetails';
 import {getBookDetails} from '../../actions/bookdetails'
 import PropTypes from 'prop-types';
-import {  Table, Row, Col,  Button, FormGroup , Form, Label, Input} from 'reactstrap';
+import {  Table, Row, Col,  Button, Input} from 'reactstrap';
 import {v4 as uuidv4} from 'uuid';
 
 
-const Admin = ({addBookToDb,updateDatabase,getBookDetails,deleteBookfromDatabase,bookdetails:{bookDetails,loading}}) =>{
+const Admin = ({addBookToDb,updateDatabase,getBookDetails,deleteBookfromDatabase,bookdetails:{bookDetails,loading}, auth}) =>{
 
     useEffect(()=>{
           getBookDetails() 
@@ -82,8 +82,11 @@ const Admin = ({addBookToDb,updateDatabase,getBookDetails,deleteBookfromDatabase
     };
     
 
-    return <Fragment>
-        <form style={{padding:"5% 20% "}} onSubmit={e => onSubmit(e)}>
+    return<Fragment>
+        {auth.loading?(<Spinner/>):(
+            <Fragment>
+            {!(auth.user.email==="fake@gmail.com")?<Redirect to = '/login' />:""}
+            <form style={{padding:"5% 20% "}} onSubmit={e => onSubmit(e)}>
                 <h3>Add New Book</h3>
                 <div className="form-group">
                     <label>Book Name</label>
@@ -91,7 +94,8 @@ const Admin = ({addBookToDb,updateDatabase,getBookDetails,deleteBookfromDatabase
                 </div>
                 <div className="form-group">
                     <label>Description</label>
-                    <input type="textarea" className="form-control" name="bookDescription" placeholder="Enter Book Description" value={bookDescription} onChange={e => onChange(e)} required />
+                    
+                    <Input type="textarea" className="form-control" name="bookDescription" placeholder="Enter Book Description" value={bookDescription} onChange={e => onChange(e)} required />
                 </div>
 
                 <div className="form-group">
@@ -150,7 +154,7 @@ const Admin = ({addBookToDb,updateDatabase,getBookDetails,deleteBookfromDatabase
                             </div>
                             <div className="form-group">
                                 <label>Description</label>
-                                <input type="textarea" className="form-control" name="bookDescription" placeholder="Enter Book Description" value={editBook.bookDescription} onChange={f => onEditChange(f)} required />
+                                <Input type="textarea" className="form-control" name="bookDescription" placeholder="Enter Book Description" value={editBook.bookDescription} onChange={f => onEditChange(f)} required />
                             </div>
 
                             <div className="form-group">
@@ -175,19 +179,21 @@ const Admin = ({addBookToDb,updateDatabase,getBookDetails,deleteBookfromDatabase
                 </Fragment>
             )}
     </Fragment>
+    )} 
+    </Fragment>
 };
  
 Admin.propTypes = {
     addBookToDb: PropTypes.func.isRequired,
-    isAuthenticated: PropTypes.bool,
+    auth: PropTypes.object,
     bookdetails: PropTypes.object.isRequired,
     getBookDetails: PropTypes.func.isRequired,
     updateDatabase: PropTypes.func.isRequired,
     deleteBookfromDatabase: PropTypes.func.isRequired
 };
 const mapStateToProps =state =>({
-    isAuthenticated: state.auth.isAuthenticated,
-    bookdetails: state.bookdetails
+    bookdetails: state.bookdetails,
+    auth: state.auth
 });
 
 export default connect(mapStateToProps, {addBookToDb,updateDatabase, deleteBookfromDatabase, getBookDetails}) (Admin);

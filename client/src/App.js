@@ -17,6 +17,7 @@ import MyShelf from './components/user/MyShelf';
 import Profile from './components/user/Profile';
 import Admin  from './components/user/Admin';
 import PrivateRoute from './routing/PrivateRoutes';
+import AdminRoute from './routing/AdminRoutes';
 
 //redux
 import {Provider} from 'react-redux';
@@ -49,7 +50,7 @@ function App() {
             <Route exact path="/explore" component={Explore} />
             <Route exact path = "/booksin/:genre" component={BooksByGenre}/>
             <Route exact path = "/book/:id" component={BookById}/>
-            <Route exact path = "/admin" component={Admin}/>
+            <AdminRoute exact path = "/admin" component={Admin}/>
             <PrivateRoute exact path ="/myshelf" component ={MyShelf}/>
             <PrivateRoute exact path ="/profile" component ={Profile}/>
             </Switch> 

@@ -9,7 +9,7 @@ import {setAlert} from '../../actions/alert';
 import { Container, Card, CardBody, Row, Col, Media, Button, Modal, ModalHeader, ModalBody, ModalFooter, FormGroup , Form, Label, Input} from 'reactstrap';
 
 
-const BookById = ({auth: { isAuthenticated},bookdetails:{bookDetails},usershelf:{shelf,loading},getBookById,addBook,setAlert,match}) =>{
+const BookById = ({auth: { isAuthenticated, user},bookdetails:{bookDetails},usershelf:{shelf,loading},getBookById,addBook,setAlert,match}) =>{
 
 	useEffect(()=>{
 		 getBookById(match.params.id)
@@ -42,29 +42,50 @@ const BookById = ({auth: { isAuthenticated},bookdetails:{bookDetails},usershelf:
 		setModal(!modal);
 		window.location.reload(false);
 	};
-	 
+
+	const getAvgRating= () =>{
+		var arr = [];
+		if(shelf.finalreviews.length>0){
+			arr = shelf.finalreviews.map(x=>(x.details.hasOwnProperty("rating")?x.details.rating:null))
+			arr = arr.flat().filter(x=>x)
+			arr= arr.reduce((a, b) => a + b) / arr.length
+		}
+		if(arr.length){
+			return <Fragment>
+				{arr+ " "}
+				<span class="float-center"><i class="text-warning fa fa-star"></i></span>
+			</Fragment>
+		}
+		else{
+			return <Fragment>
+				{"No ratings yet"}
+			</Fragment>
+		}
+	} 
 	
 	
 	const getReviews=() =>{
 			if(shelf.finalreviews.length){
-				console.log("if triggered")
 				return( 
 						shelf.finalreviews.map(x=>
 							<Fragment>
-								<Col md="12"key ={x._id}>
-									<p>
-										<strong>{x.name}</strong>
-										<span class="float-right">{x.details.rating}<i class="text-warning fa fa-star"></i></span>
-									</p>
-									<div class="clearfix"></div>
-									<p>{x.details.review}</p>
-								</Col>
+								{x.details.hasOwnProperty("review")?(
+									<Fragment>
+										<Col md="12"key ={x._id}>
+											<p>
+												<strong>{x.name}</strong>
+												<span class="float-right">{x.details.rating}<i class="text-warning fa fa-star"></i></span>
+											</p>
+											<div class="clearfix"></div>
+											<p>{x.details.review}</p>
+										</Col>
+									</Fragment>
+								):("")}
 							</Fragment>
 						)
 					)
 			}
 			else{
-				console.log('else triggered');
 				return(
 					<Fragment>
 					<h4>No reviews yet</h4>
@@ -86,7 +107,7 @@ const BookById = ({auth: { isAuthenticated},bookdetails:{bookDetails},usershelf:
 								<article className="gallery-wrap"> 
 									<div className="img-wrap">
 									<center>
-										<Media src="https://via.placeholder.com/190x320"/>
+										<Media style={{width:"75%"}} src={require(`../../images/${bookDetails.bookName}.jpg`)}/>
 									</center>
 									</div>
 									<center>
@@ -141,10 +162,8 @@ const BookById = ({auth: { isAuthenticated},bookdetails:{bookDetails},usershelf:
 										<dl class="param param-feature">
 											<dt>Rating</dt>
 											<dd>
-												<span class="float-center"><i class="text-warning fa fa-star"></i></span>
-												<span class="float-center"><i class="text-warning fa fa-star"></i></span>
-												<span class="float-center"><i class="text-warning fa fa-star"></i></span>
-												{' '}3.05
+												{getAvgRating()}{' '}
+												
 											</dd>
 										</dl>
 										<dl class="item-property">
@@ -153,16 +172,16 @@ const BookById = ({auth: { isAuthenticated},bookdetails:{bookDetails},usershelf:
 										</dl>
 										<dl class="param param-feature">
 											<dt>Author</dt>
-											<dd>someone</dd>
+		  									<dd>{bookDetails.bookAuthor?bookDetails.bookAuthor:"--"}</dd>
 										</dl>  
 										<dl class="param param-feature">
 											<dt>Publish date</dt>
-											<dd>some date</dd>
+											<dd>{bookDetails.publicationDate?bookDetails.publicationDate:"--"}</dd>
 										</dl>  
 										<dl class="param param-feature">
 											<dt>Genres</dt>
 											<dd>{
-												bookDetails.bookGenre.map(x=>x + ', ')}</dd>
+												bookDetails.bookGenre.toString()}</dd>
 										</dl>  
 								</article> 
 							</aside> 
