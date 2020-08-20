@@ -48,6 +48,7 @@ const BookById = ({auth: { isAuthenticated, user},bookdetails:{bookDetails},user
 		if(shelf.finalreviews.length>0){
 			arr = shelf.finalreviews.map(x=>(x.details.hasOwnProperty("rating")?x.details.rating:null))
 			arr = arr.flat().filter(x=>x)
+			if(arr.length)
 			arr= arr.reduce((a, b) => a + b) / arr.length
 		}
 		if(arr.length){
