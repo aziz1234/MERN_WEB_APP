@@ -12,13 +12,11 @@ import{
     DELETEUSER_SUCCESS,
     DELETEUSER_FAIL,
 } from './types';
-import setAuthToken from '../utils/setAuthToken';
+
 
 //Load user
 export const loadUser = () => dispatch => {
-    if(localStorage.token){
-        setAuthToken(localStorage.token);
-    }
+    
     axios.get('/api/auth')
          .then(res =>{
              dispatch({

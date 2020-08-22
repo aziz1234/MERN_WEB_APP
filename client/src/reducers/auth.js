@@ -30,7 +30,6 @@ const initialState = {
             };
         case LOGIN_SUCCESS:
         case REGISTER_SUCCESS:
-            localStorage.setItem('token',payload.token);
             return {
               ...state,
               ...payload,
@@ -38,7 +37,6 @@ const initialState = {
               loading: false
             };
         case DELETEUSER_SUCCESS:
-            localStorage.removeItem('token');
             return{
                 ...state,
                 token: null,
@@ -56,7 +54,6 @@ const initialState = {
         case AUTH_ERROR:
         case REGISTER_FAIL:
         case LOGOUT:
-            localStorage.removeItem('token');
             return{
                 ...state,
                 token:null,
