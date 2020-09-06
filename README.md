@@ -41,5 +41,5 @@ module.exports={
 ```
 After that inside the root directory: npm install
 then cd client and type npm install
-Once you're done with this just type: npm run server
+Once you're done with this just type: npm run dev
 ```
